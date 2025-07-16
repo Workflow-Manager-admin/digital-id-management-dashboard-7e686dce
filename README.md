@@ -2,33 +2,39 @@
 
 ## Digital ID Database Container
 
-This container runs the PostgreSQL instance for the Digital ID Management Dashboard.
+This container now runs a MySQL instance for the Digital ID Management Dashboard.
 
 ### Connection/Environment Variables
 
 Make sure these environment variables are set (for the backend or any database client):
-- `POSTGRES_URL`
-- `POSTGRES_USER`
-- `POSTGRES_PASSWORD`
-- `POSTGRES_DB`
-- `POSTGRES_PORT`
+- `MYSQL_URL`
+- `MYSQL_USER`
+- `MYSQL_PASSWORD`
+- `MYSQL_DB`
+- `MYSQL_PORT`
 
 Example:
 ```
-POSTGRES_URL=localhost
-POSTGRES_USER=appuser
-POSTGRES_PASSWORD=dbuser123
-POSTGRES_DB=myapp
-POSTGRES_PORT=5000
+MYSQL_URL=localhost
+MYSQL_USER=appuser
+MYSQL_PASSWORD=dbuser123
+MYSQL_DB=myapp
+MYSQL_PORT=5000
 ```
 
 ### Usage
 
-- A sample connection string is in `digital_id_database/db_connection.txt`.  
-- To connect (from the backend or psql):
+- A sample MySQL connection string is in `digital_id_database/db_connection.txt`.
+- To connect (from backend, CLI, or MySQL Workbench):
   ```
-  psql postgresql://appuser:dbuser123@localhost:5000/myapp
+  mysql -h localhost -P 5000 -u appuser -p myapp
   ```
-- The backend/other clients should read .env or explicit environment variables for these settings to assure correct connectivity between components.
+  or use (node-mysql etc):
+  ```
+  mysql://appuser:dbuser123@localhost:5000/myapp
+  ```
+- The backend and other clients should read the appropriate environment variables for these settings to assure correct connectivity between components.
 
-See `db_visualizer/postgres.env` for a compatible format for JS/TS tools.
+See `db_visualizer/mysql.env` for a compatible format for JS/TS tools.
+
+**Note:** The schema (`schema.sql`) is now written for MySQL, not PostgreSQL.
